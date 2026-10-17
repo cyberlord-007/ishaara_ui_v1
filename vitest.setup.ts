@@ -22,6 +22,11 @@ expect.extend({ toHaveNoViolations });
 // scrolls an active item into view) needs a no-op stand-in to not throw.
 Element.prototype.scrollIntoView ??= () => {};
 
+// jsdom doesn't implement the Blob-URL half of the URL API either
+// (useCuesVtt, NotesView's download button).
+URL.createObjectURL ??= () => "blob:test";
+URL.revokeObjectURL ??= () => {};
+
 beforeAll(() => server.listen({ onUnhandledFrame: "error" }));
 afterEach(() => {
   server.resetHandlers();

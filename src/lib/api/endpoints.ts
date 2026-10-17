@@ -46,6 +46,11 @@ export function getNotesHtml(videoKey: VideoKey) {
   return apiRequestText(`/v1/videos/${videoKey}/notes?format=html`);
 }
 
+/** `GET /v1/videos/{video_key}/notes?format=markdown`, for the Notes page's download button. */
+export function getNotesMarkdown(videoKey: VideoKey) {
+  return apiRequestText(`/v1/videos/${videoKey}/notes?format=markdown`);
+}
+
 /** `POST /v1/videos/{video_key}/questions`. */
 export function askQuestion(videoKey: VideoKey, request: AskQuestionRequest) {
   return apiRequest(`/v1/videos/${videoKey}/questions`, {

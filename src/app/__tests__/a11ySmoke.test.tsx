@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { onAuthStateChanged } from "firebase/auth";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
+import NotesPage from "@/app/notes/page";
 import Home from "@/app/page";
 import SignInPage from "@/app/sign-in/page";
 import WatchPage from "@/app/watch/page";
@@ -86,6 +87,18 @@ describe("accessibility smoke", () => {
     const { container } = render(
       <Providers>
         <WatchPage />
+      </Providers>,
+    );
+
+    await screen.findByRole("heading", { level: 1 });
+    expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+
+  it("Notes page's invalid-link error state has no axe violations", async () => {
+    mockSignedIn({ uid: "test-user" });
+    const { container } = render(
+      <Providers>
+        <NotesPage />
       </Providers>,
     );
 

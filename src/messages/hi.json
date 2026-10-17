@@ -94,6 +94,8 @@
     "videoSectionHeading": "वीडियो",
     "narrationSectionHeading": "नैरेशन",
     "openOnYouTube": "इस समय पर YouTube पर खोलें",
+    "readNotes": "नोट्स पढ़ें",
+    "notesLink": "नोट्स",
     "loadingDescriptions": "विवरण लोड हो रहे हैं…",
     "ended": "लेक्चर समाप्त हो गया।",
     "announceCurrentTime": "{title} में {time}",
@@ -137,6 +139,26 @@
       "announceTime": "मौजूदा समय और शीर्षक बोलें",
       "closeDialog": "कोई भी डायलॉग बंद करें और जिस नियंत्रण ने इसे खोला था वहाँ फ़ोकस लौटाएँ"
     }
+  },
+  "ask": {
+    "sectionHeading": "एक सवाल पूछें",
+    "questionLabel": "इस पल के बारे में पूछें",
+    "questionHint": "अधिकतम 500 अक्षर।",
+    "submit": "इस पल के बारे में पूछें",
+    "submitting": "पूछा जा रहा है…",
+    "charactersRemaining": "{count} अक्षर शेष",
+    "answerHeading": "उत्तर",
+    "referencedMomentsHeading": "वीडियो में इनका ज़िक्र है",
+    "jumpTo": "{time} पर जाएँ",
+    "done": "हो गया"
+  },
+  "notes": {
+    "title": "नोट्स",
+    "checkingStatus": "इस लेक्चर की स्थिति जाँची जा रही है…",
+    "loading": "नोट्स लोड हो रहे हैं…",
+    "download": "टेक्स्ट के रूप में डाउनलोड करें",
+    "print": "प्रिंट करें",
+    "goToLibrary": "लाइब्रेरी में जाएँ"
   },
   "authGate": {
     "checking": "आपकी साइन-इन स्थिति जाँची जा रही है…"

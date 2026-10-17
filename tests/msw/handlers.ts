@@ -182,11 +182,19 @@ export const handlers = [
     ),
   ),
 
-  http.get(`${API_BASE_URL}/v1/videos/:videoKey/notes`, () =>
-    HttpResponse.text("<h2>0:00</h2><p>Introduction to thermodynamics.</p>", {
-      headers: { "Content-Type": "text/html" },
-    }),
-  ),
+  http.get(`${API_BASE_URL}/v1/videos/:videoKey/notes`, ({ request }) => {
+    const format = new URL(request.url).searchParams.get("format");
+    if (format === "markdown") {
+      return HttpResponse.text(
+        "# Introduction to Thermodynamics\n\nPhysics Lectures · 30:00 · narrated in English\n\n## 00:00 – 05:00\n\n**[Board, 00:42]** A piston inside a sealed cylinder.\n",
+        { headers: { "Content-Type": "text/markdown; charset=utf-8" } },
+      );
+    }
+    return HttpResponse.text(
+      '<!doctype html><html lang="en"><head><title>Introduction to Thermodynamics - lecture notes</title></head><body><main><h1>Introduction to Thermodynamics</h1><h2>00:00 – 05:00</h2><p><strong>[Board, 00:42]</strong> A piston inside a sealed cylinder.</p></main></body></html>',
+      { headers: { "Content-Type": "text/html; charset=utf-8" } },
+    );
+  }),
 
   http.post(`${API_BASE_URL}/v1/videos/:videoKey/questions`, () =>
     HttpResponse.json({

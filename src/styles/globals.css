@@ -75,3 +75,14 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Notes page: removes navigation so printing is just the notes themselves.
+   Per-button hiding (Download/Print) is done with Tailwind's print: variant
+   at the call site instead, since it's local to one component. */
+@media print {
+  header,
+  footer,
+  .skip-link {
+    display: none;
+  }
+}

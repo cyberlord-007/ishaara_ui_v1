@@ -1,9 +1,12 @@
 "use client";
 
 import { useActorRef, useSelector } from "@xstate/react";
+import type { Route } from "next";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ActorRefFrom } from "xstate";
+import { AskPanel } from "@/features/questions/AskPanel";
 import { useAnnounce } from "@/lib/a11y/useAnnounce";
 import { useHotkeys } from "@/lib/a11y/useHotkeys";
 import { ApiError, toKnownErrorCode, toUserMessage } from "@/lib/api/errors";
@@ -128,6 +131,7 @@ export function PlayerShell({
 
       {ports && cuesQuery.data ? (
         <NarratedPlayerInner
+          videoKey={videoKey}
           ports={ports}
           cues={cuesQuery.data.cues}
           title={title}
@@ -141,6 +145,7 @@ export function PlayerShell({
 }
 
 interface NarratedPlayerInnerProps {
+  videoKey: VideoKey;
   ports: ReadyPorts;
   cues: readonly NarrationCue[];
   title: string;
@@ -148,12 +153,14 @@ interface NarratedPlayerInnerProps {
 }
 
 function NarratedPlayerInner({
+  videoKey,
   ports,
   cues,
   title,
   initialSeekSeconds,
 }: NarratedPlayerInnerProps) {
   const t = useTranslations("watch");
+  const tAsk = useTranslations("ask");
   const announce = useAnnounce();
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
 
@@ -210,6 +217,7 @@ function NarratedPlayerInner({
           seconds: actorRef.getSnapshot().context.currentSeconds + 10,
         }),
       s: () => actorRef.send({ type: "SKIP" }),
+      q: () => actorRef.send({ type: "ASK" }),
       t: () => {
         const seconds = actorRef.getSnapshot().context.currentSeconds;
         announce(
@@ -232,12 +240,28 @@ function NarratedPlayerInner({
       >
         <p className="m-0 text-lg font-bold">{message}</p>
         <p className="m-0 text-ink-muted">{nextStep}</p>
+        <Link
+          href={`/notes?v=${videoKey}` as Route}
+          className="self-start font-bold text-pen"
+        >
+          {t("readNotes")}
+        </Link>
       </div>
     );
   }
 
   if (topState === "ended") {
-    return <output className="block text-lg">{t("ended")}</output>;
+    return (
+      <div className="flex flex-col gap-2">
+        <output className="block text-lg">{t("ended")}</output>
+        <Link
+          href={`/notes?v=${videoKey}` as Route}
+          className="self-start font-bold text-pen"
+        >
+          {t("notesLink")}
+        </Link>
+      </div>
+    );
   }
 
   return (
@@ -251,6 +275,21 @@ function NarratedPlayerInner({
       <ControlBar actorRef={actorRef} />
       <NowDescribing actorRef={actorRef} />
       <CueList actorRef={actorRef} cues={cues} />
+      <section
+        aria-labelledby="ask-section-heading"
+        className="flex flex-col gap-3"
+      >
+        <h2 id="ask-section-heading" className="visually-hidden">
+          {tAsk("sectionHeading")}
+        </h2>
+        <AskPanel videoKey={videoKey} actorRef={actorRef} />
+      </section>
+      <Link
+        href={`/notes?v=${videoKey}` as Route}
+        className="self-start font-bold text-pen"
+      >
+        {t("notesLink")}
+      </Link>
       <ShortcutsDialog isOpen={shortcutsOpen} onOpenChange={setShortcutsOpen} />
     </section>
   );

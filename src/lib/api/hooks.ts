@@ -81,6 +81,21 @@ export function useNotes(videoKey: VideoKey, enabled: boolean) {
   });
 }
 
+/**
+ * `GET /v1/videos/{video_key}/notes?format=markdown`, fetched on demand (the
+ * Download button calls `refetch()`) rather than alongside the HTML notes —
+ * nothing else on the Notes page needs the Markdown form.
+ */
+export function useNotesMarkdown(videoKey: VideoKey) {
+  return useQuery({
+    queryKey: ["video", videoKey, "notesMarkdown"],
+    queryFn: () => endpoints.getNotesMarkdown(videoKey),
+    enabled: false,
+    staleTime: Number.POSITIVE_INFINITY,
+    gcTime: CUES_AND_NOTES_GC_TIME_MS,
+  });
+}
+
 /** `POST /v1/videos/{video_key}/questions`. */
 export function useAskQuestion(videoKey: VideoKey) {
   return useMutation({

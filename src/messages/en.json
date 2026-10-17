@@ -94,6 +94,8 @@
     "videoSectionHeading": "Video",
     "narrationSectionHeading": "Narration",
     "openOnYouTube": "Open on YouTube at this time",
+    "readNotes": "Read notes",
+    "notesLink": "Notes",
     "loadingDescriptions": "Loading descriptions…",
     "ended": "Lecture finished.",
     "announceCurrentTime": "{time} into {title}",
@@ -137,6 +139,26 @@
       "announceTime": "Speak the current time and the title",
       "closeDialog": "Close any dialog and return focus to the control that opened it"
     }
+  },
+  "ask": {
+    "sectionHeading": "Ask a question",
+    "questionLabel": "Ask about this moment",
+    "questionHint": "Up to 500 characters.",
+    "submit": "Ask about this moment",
+    "submitting": "Asking…",
+    "charactersRemaining": "{count} characters remaining",
+    "answerHeading": "Answer",
+    "referencedMomentsHeading": "Mentioned in the video",
+    "jumpTo": "Jump to {time}",
+    "done": "Done"
+  },
+  "notes": {
+    "title": "Notes",
+    "checkingStatus": "Checking this lecture's status…",
+    "loading": "Loading notes…",
+    "download": "Download as text",
+    "print": "Print",
+    "goToLibrary": "Go to Library"
   },
   "authGate": {
     "checking": "Checking your sign-in status…"
