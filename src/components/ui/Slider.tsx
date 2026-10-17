@@ -11,10 +11,17 @@ import {
 
 export interface SliderProps extends AriaSliderProps {
   label: string;
+  /** Overrides the output text (and so the announced value), e.g. "1.25 times". */
+  formatValue?: (value: number) => string;
 }
 
-/** Announces its value via `getValueLabel`/`SliderOutput`, e.g. "1.25 times". */
-export function Slider({ label, className, ...props }: SliderProps) {
+/** Announces its value via `SliderOutput`, formatted by `formatValue` when given. */
+export function Slider({
+  label,
+  formatValue,
+  className,
+  ...props
+}: SliderProps) {
   return (
     <AriaSlider
       {...props}
@@ -22,7 +29,11 @@ export function Slider({ label, className, ...props }: SliderProps) {
     >
       <div className="flex items-baseline justify-between gap-3">
         <Label className="font-bold">{label}</Label>
-        <SliderOutput className="font-bold tabular-nums" />
+        <SliderOutput className="font-bold tabular-nums">
+          {({ state, defaultChildren }) =>
+            formatValue ? formatValue(state.getThumbValue(0)) : defaultChildren
+          }
+        </SliderOutput>
       </div>
       <SliderTrack className="relative flex h-11 items-center">
         {({ state }) => (

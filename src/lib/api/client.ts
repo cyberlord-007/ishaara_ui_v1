@@ -95,3 +95,16 @@ export async function apiRequestText(
   const response = await performFetch(path, method, body, false);
   return response.text();
 }
+
+/**
+ * Calls an endpoint that returns a raw binary/text body as a `Blob` (for example the
+ * `cues.vtt` track, which needs the bearer token but is consumed as a `<track src>`
+ * blob URL — a `<track>` element can't send an `Authorization` header itself).
+ */
+export async function apiRequestBlob(
+  path: string,
+  { method = "GET", body }: { method?: Method; body?: unknown } = {},
+): Promise<Blob> {
+  const response = await performFetch(path, method, body, false);
+  return response.blob();
+}

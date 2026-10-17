@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import Home from "@/app/page";
 import SignInPage from "@/app/sign-in/page";
+import WatchPage from "@/app/watch/page";
 import { Providers } from "@/providers/Providers";
 
 vi.mock("next/navigation", () => ({
@@ -70,6 +71,21 @@ describe("accessibility smoke", () => {
     const { container } = render(
       <Providers>
         <Home />
+      </Providers>,
+    );
+
+    await screen.findByRole("heading", { level: 1 });
+    expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+
+  // The loaded-player state needs a real browser (the YouTube IFrame API has
+  // no jsdom equivalent) — this exercises Watch's no-`?v=` error path, the
+  // one Watch state renderable without it.
+  it("Watch page's invalid-link error state has no axe violations", async () => {
+    mockSignedIn({ uid: "test-user" });
+    const { container } = render(
+      <Providers>
+        <WatchPage />
       </Providers>,
     );
 

@@ -46,21 +46,23 @@ describe("CuesResponseSchema", () => {
     const result = CuesResponseSchema.parse(cuesFixture);
     expect(result.cues).toHaveLength(2);
     expect(result.cues[0]).toMatchObject({
-      cueId: "cue_001",
+      cueId: "cue-0001",
       startSeconds: 42.5,
       referentKind: "diagram",
+      gapSummary: "A piston diagram is drawn inside a sealed cylinder.",
       audioUrl:
-        "https://storage.googleapis.com/ishaara/dQw4w9WgXcQ_en_v1/cue_001.wav",
+        "https://storage.googleapis.com/ishaara/dQw4w9WgXcQ_en_v1/cue-0001.wav",
     });
     expect(result.cues[1]?.audioUrl).toBeNull();
   });
 });
 
 describe("HistoryResponseSchema", () => {
-  it("parses a history fixture with mixed languages and statuses", () => {
+  it("parses a history fixture with just video_key, title and submitted_at", () => {
     const result = HistoryResponseSchema.parse(historyFixture);
     expect(result.videos).toHaveLength(2);
-    expect(result.videos[1]?.narration_language).toBe("hi");
+    expect(result.videos[1]?.video_key).toBe("abcdefghijk_hi_v2");
+    expect(result.videos[1]?.status).toBeUndefined();
   });
 });
 

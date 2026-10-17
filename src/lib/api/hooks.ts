@@ -46,6 +46,22 @@ export function useCues(videoKey: VideoKey, enabled: boolean) {
   });
 }
 
+/**
+ * `GET /v1/videos/{video_key}/cues.vtt`, as a blob URL a `<track src>` can use.
+ * The blob URL lives for this query's `gcTime` — TanStack Query, not the caller,
+ * owns when it's no longer needed; nothing revokes it mid-cache-life.
+ */
+export function useCuesVtt(videoKey: VideoKey, enabled: boolean) {
+  return useQuery({
+    queryKey: ["video", videoKey, "cuesVtt"],
+    queryFn: async () =>
+      URL.createObjectURL(await endpoints.getCuesVtt(videoKey)),
+    enabled,
+    staleTime: Number.POSITIVE_INFINITY,
+    gcTime: CUES_AND_NOTES_GC_TIME_MS,
+  });
+}
+
 /** `GET /v1/videos/{video_key}/notes?format=html`. Results are immutable per `video_key`. */
 export function useNotes(videoKey: VideoKey, enabled: boolean) {
   return useQuery({

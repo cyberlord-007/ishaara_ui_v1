@@ -18,6 +18,10 @@ import { server } from "./tests/msw/server";
 
 expect.extend({ toHaveNoViolations });
 
+// jsdom doesn't implement scrollIntoView; CueList (and anything else that
+// scrolls an active item into view) needs a no-op stand-in to not throw.
+Element.prototype.scrollIntoView ??= () => {};
+
 beforeAll(() => server.listen({ onUnhandledFrame: "error" }));
 afterEach(() => {
   server.resetHandlers();

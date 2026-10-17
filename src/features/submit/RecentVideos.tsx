@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useHistory } from "@/lib/api/hooks";
 import type { VideoStatus } from "@/lib/api/schemas";
 import { formatSpokenDuration } from "@/lib/time";
+import { parseVideoKey } from "@/lib/videoKey";
 
 const LANGUAGE_NAME_KEYS = {
   en: "languageNameEn",
@@ -45,7 +46,18 @@ export function RecentVideos() {
       <ul className="m-0 flex flex-col gap-1 p-0" style={{ listStyle: "none" }}>
         {videos.map((video) => {
           const destination = `/watch?v=${video.video_key}` as Route;
+          // `/v1/me/videos` doesn't return status/duration yet (see
+          // docs/backend-requests.md) — without it, don't assume the video is
+          // ready to watch.
           const isReady = video.status === "ready";
+          const language = parseVideoKey(video.video_key).narrationLanguage;
+          const details = [
+            t(LANGUAGE_NAME_KEYS[language]),
+            video.duration_seconds != null
+              ? formatSpokenDuration(video.duration_seconds)
+              : null,
+            video.status ? t(statusKey(video.status)) : null,
+          ].filter((part): part is string => part !== null);
           return (
             <li
               key={video.video_key}
@@ -59,9 +71,7 @@ export function RecentVideos() {
                 <span className="text-lg font-bold">{video.title}</span>
               )}
               <span className="text-base text-ink-muted">
-                {t(LANGUAGE_NAME_KEYS[video.narration_language])},{" "}
-                {formatSpokenDuration(video.duration_seconds)},{" "}
-                {t(statusKey(video.status))}
+                {details.join(", ")}
               </span>
             </li>
           );

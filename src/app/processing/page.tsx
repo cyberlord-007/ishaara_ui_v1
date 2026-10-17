@@ -15,6 +15,7 @@ import { useVideoStatus } from "@/lib/api/hooks";
 import type { PipelineStage } from "@/lib/api/schemas";
 import { VideoKey } from "@/lib/api/schemas";
 import { formatSpokenDuration } from "@/lib/time";
+import { parseVideoKey } from "@/lib/videoKey";
 
 const LANGUAGE_NAME_KEYS = {
   en: "languageNameEn",
@@ -162,9 +163,14 @@ function ProcessingContent() {
           {data.title}
         </h1>
         <p className="m-0 text-ink-muted">
-          {data.channel_title}, {formatSpokenDuration(data.duration_seconds)},{" "}
+          {data.channel_title ? `${data.channel_title}, ` : ""}
+          {formatSpokenDuration(data.duration_seconds)},{" "}
           {t("narrationIn", {
-            language: home(LANGUAGE_NAME_KEYS[data.narration_language]),
+            language: home(
+              LANGUAGE_NAME_KEYS[
+                parseVideoKey(data.video_key).narrationLanguage
+              ],
+            ),
           })}
         </p>
       </div>

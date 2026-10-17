@@ -41,6 +41,7 @@ export const NarrationCueSchema = z
     spoken_phrase: z.string(),
     referent_kind: ReferentKind,
     board_description: z.string(),
+    gap_summary: z.string(),
     narration_text: z.string(),
     audio_url: z.string().url().nullable(),
     audio_duration_seconds: z.number().positive().nullable(),
@@ -52,6 +53,7 @@ export const NarrationCueSchema = z
     spokenPhrase: cue.spoken_phrase,
     referentKind: cue.referent_kind,
     boardDescription: cue.board_description,
+    gapSummary: cue.gap_summary,
     narrationText: cue.narration_text,
     audioUrl: cue.audio_url,
     audioDurationSeconds: cue.audio_duration_seconds,
@@ -59,13 +61,18 @@ export const NarrationCueSchema = z
   }));
 export type NarrationCue = z.output<typeof NarrationCueSchema>;
 
-// Inferred from VideoRecord; confirm against /openapi.json once the backend is reachable.
+// Matches docs/postman/ishaara.postman_collection.json's "status object": video_key,
+// status, stage, progress_percent, title, duration_seconds, error_code, error_message.
+// No youtube_video_id or narration_language — the backend never sends them here; use
+// parseVideoKey() (src/lib/videoKey.ts) to recover both from video_key itself.
+// `channel_title` isn't sent by the backend yet either, but is kept here as an optional
+// placeholder — it's a requested addition (see docs/backend-requests.md) for the Watch
+// page's "title and channel" region, so the frontend picks it up the moment it exists
+// with no further schema change.
 export const VideoStatusResponseSchema = z.object({
   video_key: VideoKey,
-  youtube_video_id: z.string().length(11),
-  narration_language: NarrationLanguage,
   title: z.string(),
-  channel_title: z.string(),
+  channel_title: z.string().optional(),
   duration_seconds: z.number().int().nonnegative(),
   status: VideoStatus,
   stage: PipelineStage.nullable(),
@@ -93,14 +100,19 @@ export const QuestionAnswerSchema = z
   }));
 export type QuestionAnswer = z.output<typeof QuestionAnswerSchema>;
 
-export const VideoSummarySchema = VideoStatusResponseSchema.pick({
-  video_key: true,
-  title: true,
-  channel_title: true,
-  duration_seconds: true,
-  narration_language: true,
-  status: true,
-}).extend({ submitted_at: z.iso.datetime() });
+// Matches GET /v1/me/videos's item shape exactly: just video_key, title, submitted_at.
+// `duration_seconds`, `status` and `error_message` are kept as optional placeholders —
+// requested additions (see docs/backend-requests.md) so RecentVideos/Library can show
+// per-item duration and status without an extra GET per row. Language doesn't need a
+// backend field at all: parseVideoKey() recovers it from video_key.
+export const VideoSummarySchema = z.object({
+  video_key: VideoKey,
+  title: z.string(),
+  submitted_at: z.iso.datetime(),
+  duration_seconds: z.number().int().nonnegative().optional(),
+  status: VideoStatus.optional(),
+  error_message: z.string().nullable().optional(),
+});
 export type VideoSummary = z.infer<typeof VideoSummarySchema>;
 
 export const HistoryResponseSchema = z.object({

@@ -3,19 +3,11 @@
     {
       "video_key": "dQw4w9WgXcQ_en_v1",
       "title": "Introduction to Thermodynamics",
-      "channel_title": "Physics Lectures",
-      "duration_seconds": 1800,
-      "narration_language": "en",
-      "status": "ready",
       "submitted_at": "2026-10-10T09:15:00Z"
     },
     {
       "video_key": "abcdefghijk_hi_v2",
       "title": "कक्षा का परिचय",
-      "channel_title": "Hindi Lectures",
-      "duration_seconds": 900,
-      "narration_language": "hi",
-      "status": "processing",
       "submitted_at": "2026-10-11T06:00:00Z"
     }
   ]

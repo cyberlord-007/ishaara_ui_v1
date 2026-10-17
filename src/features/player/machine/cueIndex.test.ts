@@ -9,6 +9,7 @@ function makeCue(cueId: string, startSeconds: number): NarrationCue {
     spokenPhrase: "this",
     referentKind: "text",
     boardDescription: "",
+    gapSummary: "",
     narrationText: "",
     audioUrl: null,
     audioDurationSeconds: null,

@@ -89,7 +89,54 @@
   },
   "watch": {
     "title": "Watch",
-    "comingSoon": "The full player is coming in a later milestone."
+    "checkingStatus": "Checking this lecture's status…",
+    "goToLibrary": "Go to Library",
+    "videoSectionHeading": "Video",
+    "narrationSectionHeading": "Narration",
+    "openOnYouTube": "Open on YouTube at this time",
+    "loadingDescriptions": "Loading descriptions…",
+    "ended": "Lecture finished.",
+    "announceCurrentTime": "{time} into {title}",
+    "controlBar": {
+      "play": "Play",
+      "pause": "Pause",
+      "back10": "Back 10 seconds",
+      "forward10": "Forward 10 seconds",
+      "previousDescription": "Previous description",
+      "nextDescription": "Next description",
+      "narrationSpeedLabel": "Narration speed",
+      "narrationSpeedValue": "{rate} times"
+    },
+    "nowDescribing": {
+      "heading": "Now describing",
+      "nothingActive": "No description is active right now.",
+      "waitingForResume": "Waiting for you to resume.",
+      "repeat": "Repeat",
+      "skip": "Skip",
+      "resume": "Resume",
+      "kindEquation": "equation",
+      "kindDiagram": "diagram",
+      "kindGraph": "graph",
+      "kindCode": "code",
+      "kindTable": "table",
+      "kindText": "text",
+      "kindPhysicalObject": "physical object"
+    },
+    "cueList": {
+      "heading": "Described moments",
+      "emptyState": "No described moments in this lecture."
+    },
+    "shortcuts": {
+      "openButton": "Keyboard shortcuts",
+      "title": "Keyboard shortcuts",
+      "playPause": "Play or pause (during narration: stop narration and resume video)",
+      "repeat": "Repeat the last description",
+      "nextPrevious": "Jump to the next or previous described moment",
+      "seekBackForward": "Back or forward 10 seconds",
+      "skip": "Skip the current description",
+      "announceTime": "Speak the current time and the title",
+      "closeDialog": "Close any dialog and return focus to the control that opened it"
+    }
   },
   "authGate": {
     "checking": "Checking your sign-in status…"

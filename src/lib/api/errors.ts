@@ -3,10 +3,13 @@ import { z } from "zod";
 export const ErrorCode = z.enum([
   "invalid_token",
   "invalid_youtube_url",
+  "invalid_request",
+  "request_too_large",
   "video_not_public",
   "video_not_embeddable",
   "video_is_live",
   "video_too_long",
+  "youtube_unavailable",
   "daily_limit_reached",
   "video_not_found",
   "video_not_ready",
@@ -70,6 +73,21 @@ export function toUserMessage(
       return {
         message: "That doesn't look like a YouTube link.",
         nextStep: "Paste a link that starts with youtube.com or youtu.be",
+      };
+    case "invalid_request":
+      return {
+        message: "That didn't look right.",
+        nextStep: "Check what you typed and try again",
+      };
+    case "request_too_large":
+      return {
+        message: "That's too much text.",
+        nextStep: "Shorten it and try again",
+      };
+    case "youtube_unavailable":
+      return {
+        message: "YouTube didn't respond.",
+        nextStep: "Try again in a minute",
       };
     case "video_not_public":
       return {

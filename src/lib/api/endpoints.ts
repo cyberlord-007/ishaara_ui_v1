@@ -1,5 +1,4 @@
-import { env } from "@/env";
-import { apiRequest, apiRequestText } from "@/lib/api/client";
+import { apiRequest, apiRequestBlob, apiRequestText } from "@/lib/api/client";
 import {
   type AskQuestionRequest,
   CuesResponseSchema,
@@ -33,9 +32,13 @@ export function getCues(videoKey: VideoKey) {
   });
 }
 
-/** `GET /v1/videos/{video_key}/cues.vtt`, as a URL for a `<track>` element, never fetched directly. */
-export function getCuesVttUrl(videoKey: VideoKey): string {
-  return `${env.NEXT_PUBLIC_API_BASE_URL}/v1/videos/${videoKey}/cues.vtt`;
+/**
+ * `GET /v1/videos/{video_key}/cues.vtt`. Needs the bearer token, so unlike cue audio
+ * this can't be handed to a player element as a bare URL — fetch it and turn the
+ * result into a blob URL for a `<track src>` instead (see `useCuesVtt`).
+ */
+export function getCuesVtt(videoKey: VideoKey) {
+  return apiRequestBlob(`/v1/videos/${videoKey}/cues.vtt`);
 }
 
 /** `GET /v1/videos/{video_key}/notes?format=html`. Caller sanitises with DOMPurify before render. */

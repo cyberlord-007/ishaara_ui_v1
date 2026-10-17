@@ -8,10 +8,16 @@ type VideoState = "playing" | "paused" | "ended" | "buffering";
  * `onStateChange` listeners are queued and attached once the underlying
  * player's own `onReady` fires, since the machine's root-level invoke
  * subscribes immediately on actor creation, before the player exists.
+ *
+ * `onError` is a plain constructor callback, not part of `VideoPlayerPort` —
+ * per the F4 plan's decision 5, YouTube's numeric error code bypasses the
+ * port entirely and is wired straight to `actorRef.send({ type:
+ * "PLAYER_ERROR", code })` from this component layer.
  */
 export function createYouTubePlayerPort(
   container: HTMLElement,
   videoId: string,
+  options?: { title?: string; onError?: (code: number) => void },
 ): { port: VideoPlayerPort; ready: Promise<void>; destroy: () => void } {
   const stateListeners = new Set<(state: VideoState) => void>();
   let player: YT.Player | null = null;
@@ -45,7 +51,12 @@ export function createYouTubePlayerPort(
             playsinline: 1,
           },
           events: {
-            onReady: () => resolve(),
+            onReady: (event) => {
+              if (options?.title) {
+                event.target.getIframe().title = options.title;
+              }
+              resolve();
+            },
             onStateChange: (event: YT.OnStateChangeEvent) => {
               const state = toPortState(event.data);
               if (state) {
@@ -54,6 +65,7 @@ export function createYouTubePlayerPort(
                 }
               }
             },
+            onError: (event: YT.OnErrorEvent) => options?.onError?.(event.data),
           },
         });
       }),

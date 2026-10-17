@@ -17,6 +17,7 @@ function makeCue(
     spokenPhrase: "this",
     referentKind: "text",
     boardDescription: "",
+    gapSummary: "",
     narrationText: `narrating ${cueId}`,
     audioUrl,
     audioDurationSeconds: audioUrl ? 2 : null,
@@ -385,6 +386,38 @@ describe("createNarratedPlayerMachine", () => {
     actor.send({ type: "NEXT_CUE" });
     expect(actor.getSnapshot().context.activeCue?.cueId).toBe("b");
     expect(actor.getSnapshot().context.resumeTo).toBe("paused");
+  });
+
+  it("JUMP_TO_CUE from paused arms the exact cue by id, not just the adjacent one", () => {
+    const cues = [makeCue("a", 10), makeCue("b", 20), makeCue("c", 30)];
+    const { actor, video } = createTestActor(cues);
+    actor.send({ type: "PLAYER_READY" });
+    actor.send({ type: "JUMP_TO_CUE", cueId: "c" });
+    expect(actor.getSnapshot().value).toEqual({ narrating: "speaking" });
+    expect(actor.getSnapshot().context.activeCue?.cueId).toBe("c");
+    expect(video.seekTo).toHaveBeenCalledWith(28);
+    expect(actor.getSnapshot().context.resumeTo).toBe("paused");
+  });
+
+  it("JUMP_TO_CUE while already narrating re-arms the named cue and preserves resumeTo", () => {
+    const cues = [makeCue("a", 10), makeCue("b", 20), makeCue("c", 30)];
+    const { actor } = createTestActor(cues);
+    actor.send({ type: "PLAYER_READY" });
+    actor.send({ type: "PLAY" });
+    actor.send({ type: "JUMP_TO_CUE", cueId: "a" });
+    expect(actor.getSnapshot().context.resumeTo).toBe("playing");
+    actor.send({ type: "JUMP_TO_CUE", cueId: "c" });
+    expect(actor.getSnapshot().context.activeCue?.cueId).toBe("c");
+    expect(actor.getSnapshot().context.resumeTo).toBe("playing");
+  });
+
+  it("JUMP_TO_CUE to an unknown cue id arms nothing and awaits resume", () => {
+    const cues = [makeCue("a", 10)];
+    const { actor } = createTestActor(cues);
+    actor.send({ type: "PLAYER_READY" });
+    actor.send({ type: "JUMP_TO_CUE", cueId: "does-not-exist" });
+    expect(actor.getSnapshot().value).toEqual({ narrating: "awaitingResume" });
+    expect(actor.getSnapshot().context.activeCue).toBeNull();
   });
 
   it("ASK pauses the video and moves to asking from playing, paused, or narrating", () => {

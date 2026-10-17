@@ -28,10 +28,9 @@ function buildStatusResponse(videoKey: string) {
 
   return {
     video_key: videoKey,
-    youtube_video_id: videoKey.slice(0, 11),
-    narration_language: "en",
+    // channel_title intentionally omitted — the real backend doesn't send it yet
+    // (see docs/backend-requests.md); it's an optional field in the schema.
     title: "Introduction to Thermodynamics",
-    channel_title: "Physics Lectures",
     duration_seconds: 1800,
     status: isReady ? "ready" : "processing",
     stage: isReady ? null : STAGE_ORDER[stageIndex],
@@ -74,6 +73,18 @@ const ERROR_FIXTURES: Record<ErrorCode, { status: number; detail: string }> = {
   video_not_ready: {
     status: 409,
     detail: "The video has not finished processing.",
+  },
+  invalid_request: {
+    status: 422,
+    detail: "body.question: String should have at least 1 character",
+  },
+  request_too_large: {
+    status: 413,
+    detail: "The request body must be at most 16384 bytes.",
+  },
+  youtube_unavailable: {
+    status: 502,
+    detail: "YouTube did not respond in time.",
   },
 };
 
@@ -147,15 +158,16 @@ export const handlers = [
     return HttpResponse.json({
       cues: [
         {
-          cue_id: "cue_001",
+          cue_id: "cue-0001",
           start_seconds: 42.5,
           spoken_phrase: "as shown here",
           referent_kind: "diagram",
           board_description:
             "A labelled diagram of a piston inside a sealed cylinder.",
+          gap_summary: "A piston diagram is drawn inside a sealed cylinder.",
           narration_text:
             "On the board is a diagram of a piston inside a sealed cylinder.",
-          audio_url: "https://storage.googleapis.com/ishaara/cue_001.wav",
+          audio_url: "https://storage.googleapis.com/ishaara/cue-0001.wav",
           audio_duration_seconds: 6.2,
           confidence: 0.94,
         },
@@ -165,7 +177,8 @@ export const handlers = [
 
   http.get(`${API_BASE_URL}/v1/videos/:videoKey/cues.vtt`, () =>
     HttpResponse.text(
-      "WEBVTT\n\n00:00:42.500 --> 00:00:48.700\nA labelled diagram of a piston.\n",
+      "WEBVTT\nKind: descriptions\nLanguage: en\n\ncue-0001\n00:00:42.500 --> 00:00:48.700\nA labelled diagram of a piston.\n",
+      { headers: { "Content-Type": "text/vtt; charset=utf-8" } },
     ),
   ),
 
@@ -184,15 +197,13 @@ export const handlers = [
   ),
 
   http.get(`${API_BASE_URL}/v1/me/videos`, () =>
+    // duration_seconds/status/error_message intentionally omitted — the real
+    // backend doesn't send them yet (see docs/backend-requests.md).
     HttpResponse.json({
       videos: [
         {
           video_key: "dQw4w9WgXcQ_en_v1",
           title: "Introduction to Thermodynamics",
-          channel_title: "Physics Lectures",
-          duration_seconds: 1800,
-          narration_language: "en",
-          status: "ready",
           submitted_at: "2026-10-10T09:15:00Z",
         },
       ],

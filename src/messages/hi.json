@@ -89,7 +89,54 @@
   },
   "watch": {
     "title": "देखें",
-    "comingSoon": "पूरा प्लेयर बाद के माइलस्टोन में आएगा।"
+    "checkingStatus": "इस लेक्चर की स्थिति जाँची जा रही है…",
+    "goToLibrary": "लाइब्रेरी में जाएँ",
+    "videoSectionHeading": "वीडियो",
+    "narrationSectionHeading": "नैरेशन",
+    "openOnYouTube": "इस समय पर YouTube पर खोलें",
+    "loadingDescriptions": "विवरण लोड हो रहे हैं…",
+    "ended": "लेक्चर समाप्त हो गया।",
+    "announceCurrentTime": "{title} में {time}",
+    "controlBar": {
+      "play": "चलाएँ",
+      "pause": "रोकें",
+      "back10": "10 सेकंड पीछे",
+      "forward10": "10 सेकंड आगे",
+      "previousDescription": "पिछला विवरण",
+      "nextDescription": "अगला विवरण",
+      "narrationSpeedLabel": "नैरेशन की गति",
+      "narrationSpeedValue": "{rate} गुना"
+    },
+    "nowDescribing": {
+      "heading": "अभी वर्णन",
+      "nothingActive": "अभी कोई विवरण सक्रिय नहीं है।",
+      "waitingForResume": "आपके जारी रखने की प्रतीक्षा है।",
+      "repeat": "दोहराएँ",
+      "skip": "छोड़ें",
+      "resume": "जारी रखें",
+      "kindEquation": "समीकरण",
+      "kindDiagram": "डायग्राम",
+      "kindGraph": "ग्राफ़",
+      "kindCode": "कोड",
+      "kindTable": "टेबल",
+      "kindText": "टेक्स्ट",
+      "kindPhysicalObject": "भौतिक वस्तु"
+    },
+    "cueList": {
+      "heading": "वर्णित क्षण",
+      "emptyState": "इस लेक्चर में कोई वर्णित क्षण नहीं है।"
+    },
+    "shortcuts": {
+      "openButton": "कीबोर्ड शॉर्टकट",
+      "title": "कीबोर्ड शॉर्टकट",
+      "playPause": "चलाएँ या रोकें (वर्णन के दौरान: वर्णन रोकें और वीडियो जारी रखें)",
+      "repeat": "पिछला विवरण दोहराएँ",
+      "nextPrevious": "अगले या पिछले वर्णित क्षण पर जाएँ",
+      "seekBackForward": "10 सेकंड पीछे या आगे",
+      "skip": "मौजूदा विवरण छोड़ें",
+      "announceTime": "मौजूदा समय और शीर्षक बोलें",
+      "closeDialog": "कोई भी डायलॉग बंद करें और जिस नियंत्रण ने इसे खोला था वहाँ फ़ोकस लौटाएँ"
+    }
   },
   "authGate": {
     "checking": "आपकी साइन-इन स्थिति जाँची जा रही है…"

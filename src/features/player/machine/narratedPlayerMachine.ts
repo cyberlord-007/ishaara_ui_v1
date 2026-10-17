@@ -55,6 +55,7 @@ export type NarratedPlayerEvent =
   | { type: "SEEK"; seconds: number }
   | { type: "NEXT_CUE" }
   | { type: "PREVIOUS_CUE" }
+  | { type: "JUMP_TO_CUE"; cueId: string }
   | { type: "REPEAT" }
   | { type: "SKIP" }
   | { type: "RESUME" }
@@ -99,6 +100,8 @@ function cueToArm(
       const priorCues = cuesBetween(context.cues, 0, anchor);
       return priorCues.at(-1) ?? null;
     }
+    case "JUMP_TO_CUE":
+      return context.cues.find((cue) => cue.cueId === event.cueId) ?? null;
     default:
       return context.activeCue;
   }
@@ -357,6 +360,27 @@ export function createNarratedPlayerMachine(ports: {
               ],
             },
           ],
+          JUMP_TO_CUE: [
+            {
+              guard: "shouldAwaitResume",
+              target: "narrating.awaitingResume",
+              reenter: true,
+              actions: [
+                "setResumeToPaused",
+                "armCue",
+                "seekToArmedCueMinusTwo",
+              ],
+            },
+            {
+              target: "narrating.speaking",
+              reenter: true,
+              actions: [
+                "setResumeToPaused",
+                "armCue",
+                "seekToArmedCueMinusTwo",
+              ],
+            },
+          ],
           ASK: { target: "asking" },
         },
       },
@@ -446,6 +470,27 @@ export function createNarratedPlayerMachine(ports: {
               ],
             },
           ],
+          JUMP_TO_CUE: [
+            {
+              guard: "shouldAwaitResume",
+              target: "narrating.awaitingResume",
+              reenter: true,
+              actions: [
+                "setResumeToPlaying",
+                "armCue",
+                "seekToArmedCueMinusTwo",
+              ],
+            },
+            {
+              target: "narrating.speaking",
+              reenter: true,
+              actions: [
+                "setResumeToPlaying",
+                "armCue",
+                "seekToArmedCueMinusTwo",
+              ],
+            },
+          ],
           ASK: { target: "asking" },
           VIDEO_ENDED: { target: "ended" },
         },
@@ -469,6 +514,19 @@ export function createNarratedPlayerMachine(ports: {
             },
           ],
           PREVIOUS_CUE: [
+            {
+              guard: "shouldAwaitResume",
+              target: "narrating.awaitingResume",
+              reenter: true,
+              actions: ["armCue", "seekToArmedCueMinusTwo"],
+            },
+            {
+              target: "narrating.speaking",
+              reenter: true,
+              actions: ["armCue", "seekToArmedCueMinusTwo"],
+            },
+          ],
+          JUMP_TO_CUE: [
             {
               guard: "shouldAwaitResume",
               target: "narrating.awaitingResume",
