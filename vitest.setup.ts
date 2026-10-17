@@ -7,9 +7,14 @@ process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ??= "000000000000";
 process.env.NEXT_PUBLIC_FIREBASE_APP_ID ??=
   "1:000000000000:web:0000000000000000000000";
 
-import { afterAll, afterEach, beforeAll } from "vitest";
+import { afterAll, afterEach, beforeAll, expect } from "vitest";
+// vitest-axe@0.1.0's "extend-expect"/"matchers" entry points don't work with Vitest 5
+// (see vitestAxe.d.ts); import the real matcher from its dist file and register it here.
+import { toHaveNoViolations } from "vitest-axe/dist/matchers.js";
 import { resetScriptedJobs } from "./tests/msw/handlers";
 import { server } from "./tests/msw/server";
+
+expect.extend({ toHaveNoViolations });
 
 beforeAll(() => server.listen({ onUnhandledFrame: "error" }));
 afterEach(() => {

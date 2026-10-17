@@ -1,0 +1,77 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+html {
+  font-size: calc(100% * var(--user-text-scale, 1));
+}
+
+body {
+  margin: 0;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+}
+
+:lang(hi) {
+  font-family: var(--font-devanagari);
+  line-height: 1.75;
+}
+
+/* Visually hidden but still reachable by assistive tech: live regions and the
+   "Video" / "Now describing" section headings that only sighted layout implies. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 16px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: var(--radius-control);
+  background: var(--color-highlighter);
+  color: var(--color-ink);
+  font-weight: 700;
+  text-decoration: none;
+  transition: top var(--motion-duration) ease-out;
+}
+
+.skip-link:focus-visible {
+  top: 16px;
+}
+
+/* Focus ring: 3px solid (4px in high contrast), 2px offset, never removed. */
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-pen);
+  outline-offset: 2px;
+}
+
+/* The page h1, auto-focused on route change (tabIndex={-1}, so it's never reachable by
+   Tab). Most browsers' :focus-visible heuristic matches script-triggered focus, which
+   would otherwise ring every heading on every page load for mouse/touch users who never
+   asked for it. Higher specificity than the rule above, so this wins without !important. */
+.route-heading:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

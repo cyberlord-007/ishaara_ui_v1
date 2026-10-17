@@ -44,6 +44,12 @@ bun run test:a11y   # playwright + axe, zero serious or critical violations
 bun run build
 ```
 
+## Design 
+Implement this design in this codebase:
+https://claude.ai/code/artifact/a89a8b8b-b07a-4700-ab36-f804b246b0f2
+
+Read the design's files from that link. Match how it looks, using this codebase's own components and conventions.
+
 ## Backend integration
 
 The frontend owns four jobs the backend hands it: sign the user in, submit a link and poll every 3 seconds, drive the YouTube player and pause it for each cue, and render notes and spoken answers. Every backend route maps to exactly one hook.

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isParsableYouTubeUrl } from "@/lib/youtube-url";
+import { isParsableYouTubeUrl } from "@/lib/youtubeUrl";
 
 export const VideoStatus = z.enum(["queued", "processing", "ready", "failed"]);
 export type VideoStatus = z.infer<typeof VideoStatus>;

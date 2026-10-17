@@ -1,0 +1,116 @@
+/**
+ * Design tokens, registered through Tailwind v4's `@theme` so utilities like
+ * `bg-surface`, `text-ink` and `rounded-panel` exist, then re-pointed per
+ * theme below. Every text/surface pair here meets 7:1 contrast; see
+ * docs/implementation_plan.md "Design system" for the source values.
+ */
+@theme {
+  --color-surface: #ffffff;
+  --color-surface-raised: #f3f5f9;
+  --color-ink: #0f1c3f;
+  --color-ink-muted: #3a4766;
+  --color-pen: #1d3bb8;
+  --color-highlighter: #ffd43b;
+  --color-danger: #9b1c1c;
+  --color-success: #14532d;
+
+  --radius-control: 10px;
+  --radius-panel: 16px;
+
+  --text-small: 0.9rem; /* 14.4px */
+  --text-small--line-height: 1.6;
+  --text-body: 1.125rem; /* 18px, base */
+  --text-body--line-height: 1.6;
+  --text-section: 1.40625rem; /* 22.5px */
+  --text-section--line-height: 1.4;
+  --text-description: 1.75rem; /* 28px */
+  --text-description--line-height: 1.5;
+  --text-title: 2.1875rem; /* 35px */
+  --text-title--line-height: 1.2;
+  --text-lecture: 2.75rem; /* 44px */
+  --text-lecture--line-height: 1.15;
+
+  /* --font-atkinson / --font-mukta come from next/font/google in app/layout.tsx. */
+  --font-sans:
+    var(--font-atkinson), var(--font-mukta), system-ui, "Noto Sans Devanagari",
+    sans-serif;
+  --font-devanagari:
+    var(--font-mukta), system-ui, "Noto Sans Devanagari", sans-serif;
+}
+
+/* Dark ("board") theme: follows the system unless the user picked Light or High contrast explicitly. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="high-contrast"]) {
+    --color-surface: #0e1a2b;
+    --color-surface-raised: #16253a;
+    --color-ink: #f1f4f9;
+    --color-ink-muted: #c3ccdb;
+    --color-pen: #9db4ff;
+    --color-danger: #ffa8a8;
+    --color-success: #86e0a8;
+  }
+}
+
+/* Explicit theme choice wins in both directions over the system preference. */
+:root[data-theme="dark"] {
+  --color-surface: #0e1a2b;
+  --color-surface-raised: #16253a;
+  --color-ink: #f1f4f9;
+  --color-ink-muted: #c3ccdb;
+  --color-pen: #9db4ff;
+  --color-danger: #ffa8a8;
+  --color-success: #86e0a8;
+}
+
+:root[data-theme="light"] {
+  --color-surface: #ffffff;
+  --color-surface-raised: #f3f5f9;
+  --color-ink: #0f1c3f;
+  --color-ink-muted: #3a4766;
+  --color-pen: #1d3bb8;
+  --color-danger: #9b1c1c;
+  --color-success: #14532d;
+}
+
+/* Pure black on white, always, regardless of system colour scheme: maximum contrast is the point. */
+:root[data-theme="high-contrast"] {
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-ink: #000000;
+  --color-ink-muted: #000000;
+  --color-pen: #000000;
+  --color-highlighter: #ffd43b;
+  --color-danger: #9b1c1c;
+  --color-success: #14532d;
+  --focus-ring-width: 4px;
+}
+
+@media (forced-colors: active) {
+  :root {
+    --color-surface: Canvas;
+    --color-surface-raised: Canvas;
+    --color-ink: CanvasText;
+    --color-ink-muted: CanvasText;
+    --color-pen: LinkText;
+    --color-highlighter: Highlight;
+    --color-danger: CanvasText;
+    --color-success: CanvasText;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --color-ink-muted: var(--color-ink);
+  }
+}
+
+:root {
+  --focus-ring-width: 3px;
+  --motion-duration: 240ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration: 0ms;
+  }
+}

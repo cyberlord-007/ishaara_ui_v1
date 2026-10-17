@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import cuesFixture from "../../../tests/fixtures/cues.json";
 import historyFixture from "../../../tests/fixtures/history.json";
-import questionAnswerFixture from "../../../tests/fixtures/question-answer.json";
-import videoStatusProcessingFixture from "../../../tests/fixtures/video-status-processing.json";
-import videoStatusReadyFixture from "../../../tests/fixtures/video-status-ready.json";
+import questionAnswerFixture from "../../../tests/fixtures/questionAnswer.json";
+import videoStatusProcessingFixture from "../../../tests/fixtures/videoStatusProcessing.json";
+import videoStatusReadyFixture from "../../../tests/fixtures/videoStatusReady.json";
 import {
   AskQuestionRequest,
   CuesResponseSchema,

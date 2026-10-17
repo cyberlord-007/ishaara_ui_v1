@@ -1,0 +1,66 @@
+{
+  "app": {
+    "name": "Ishaara"
+  },
+  "nav": {
+    "skipToContent": "Skip to main content",
+    "home": "Home",
+    "library": "Library",
+    "settings": "Settings",
+    "profile": "Me",
+    "signOut": "Sign out"
+  },
+  "signIn": {
+    "title": "Sign in to Ishaara",
+    "continueWithGoogle": "Continue with Google",
+    "emailLabel": "Email address",
+    "sendEmailLink": "Email me a sign-in link",
+    "emailSent": "Check your inbox for a link from Ishaara. You can close this page.",
+    "completing": "Signing you in…",
+    "completeFailed": "That sign-in link didn't work. Request a new one below.",
+    "genericError": "We couldn't sign you in. Try again."
+  },
+  "home": {
+    "title": "Describe a lecture",
+    "greetingMorning": "Good morning",
+    "greetingAfternoon": "Good afternoon",
+    "greetingEvening": "Good evening",
+    "greetingDefault": "Welcome back",
+    "comingSoon": "Pasting a link and choosing a language is coming in the next milestone."
+  },
+  "library": {
+    "title": "Your lectures",
+    "comingSoon": "Your lectures will appear here."
+  },
+  "settings": {
+    "title": "Settings",
+    "comingSoon": "Narration, display and keyboard settings are coming in a later milestone."
+  },
+  "profile": {
+    "title": "Me",
+    "detailsHeading": "Your details",
+    "nameLabel": "Name",
+    "nameHint": "Used in your welcome message.",
+    "emailLabel": "Email",
+    "signedInWithLabel": "Signed in with",
+    "memberSinceLabel": "Member since",
+    "saveChanges": "Save changes",
+    "saved": "Saved",
+    "saveFailed": "Couldn't save your name. Try again.",
+    "defaultLanguageLegend": "Default narration language",
+    "accountHeading": "Account",
+    "settingsLink": "Narration and display settings",
+    "signOut": "Sign out",
+    "providerGoogle": "Google",
+    "providerEmailLink": "Email link",
+    "comingSoon": "Your activity is coming in a later milestone."
+  },
+  "authGate": {
+    "checking": "Checking your sign-in status…"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "That page doesn't exist. Check the link, or go back to the home page.",
+    "backHome": "Go to Home"
+  }
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isParsableYouTubeUrl, parseYouTubeVideoId } from "./youtube-url";
+import { isParsableYouTubeUrl, parseYouTubeVideoId } from "./youtubeUrl";
 
 const VIDEO_ID = "dQw4w9WgXcQ";
 
