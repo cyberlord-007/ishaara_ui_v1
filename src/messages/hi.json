@@ -26,7 +26,20 @@
     "greetingAfternoon": "शुभ दोपहर",
     "greetingEvening": "शुभ संध्या",
     "greetingDefault": "वापसी पर स्वागत है",
-    "comingSoon": "लिंक पेस्ट करना और भाषा चुनना अगले माइलस्टोन में आएगा।"
+    "linkLabel": "YouTube लिंक",
+    "linkHint": "45 मिनट तक के सार्वजनिक वीडियो। youtu.be के लिंक भी काम करते हैं।",
+    "languageLegend": "नैरेशन भाषा",
+    "languageEnglish": "English",
+    "languageHindi": "हिन्दी",
+    "submit": "यह वीडियो समझाएँ",
+    "submitHint": "अधिकतर लेक्चर 2 से 6 मिनट में तैयार हो जाते हैं।",
+    "recentHeading": "हाल के लेक्चर",
+    "seeAllInLibrary": "लाइब्रेरी में सभी देखें",
+    "statusReady": "तैयार",
+    "statusInProgress": "अभी तैयार हो रहा है",
+    "statusFailed": "समझाया नहीं जा सका",
+    "languageNameEn": "English",
+    "languageNameHi": "हिन्दी"
   },
   "library": {
     "title": "आपके लेक्चर",
@@ -54,6 +67,29 @@
     "providerGoogle": "Google",
     "providerEmailLink": "ईमेल लिंक",
     "comingSoon": "आपकी गतिविधि बाद के माइलस्टोन में आएगी।"
+  },
+  "processing": {
+    "preparingFor": "इसके लिए विवरण तैयार किया जा रहा है",
+    "narrationIn": "{language} में नैरेशन",
+    "usuallyTakes": "इसमें सामान्यतः 2 से 6 मिनट लगते हैं। आप यह पेज छोड़ सकते हैं; लेक्चर आपकी लाइब्रेरी में रहेगा।",
+    "stagesHeading": "चरण",
+    "stageResolving": "वीडियो की जाँच हो रही है",
+    "stageAnalyzing": "बोर्ड की ओर इशारे के पल ढूँढे जा रहे हैं",
+    "stageWriting": "नैरेशन लिखा जा रहा है",
+    "stageVoicing": "आवाज़ रिकॉर्ड की जा रही है",
+    "stageSaving": "सहेजा जा रहा है",
+    "stageDone": "पूरा हुआ",
+    "stageInProgress": "जारी है",
+    "stageWaiting": "प्रतीक्षा में",
+    "progressAnnouncement": "{stage}। {percent} प्रतिशत।",
+    "readyAnnouncement": "तैयार है। प्लेयर खुल रहा है।",
+    "openWhenReady": "तैयार होने पर प्लेयर खोलें",
+    "goToLibrary": "लाइब्रेरी में जाएँ",
+    "tryAgain": "फिर कोशिश करें"
+  },
+  "watch": {
+    "title": "देखें",
+    "comingSoon": "पूरा प्लेयर बाद के माइलस्टोन में आएगा।"
   },
   "authGate": {
     "checking": "आपकी साइन-इन स्थिति जाँची जा रही है…"

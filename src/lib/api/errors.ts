@@ -24,6 +24,16 @@ export type ProblemDetails = z.infer<typeof ProblemDetailsSchema>;
 
 export type KnownErrorCode = ErrorCode | "network_error" | "unknown_error";
 
+/** Narrows an arbitrary string (from a problem+json body, or a `VideoStatusResponse`) to a `KnownErrorCode`. */
+export function toKnownErrorCode(
+  code: string | null | undefined,
+): KnownErrorCode {
+  const options: readonly string[] = ErrorCode.options;
+  return code && options.includes(code)
+    ? (code as KnownErrorCode)
+    : "unknown_error";
+}
+
 /** Thrown by `apiRequest` for every non-2xx response, timeout, and network failure. */
 export class ApiError extends Error {
   constructor(

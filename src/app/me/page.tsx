@@ -107,6 +107,7 @@ function ProfileContent() {
             name="name"
             render={({ field }) => (
               <TextField
+                ref={field.ref}
                 label={t("nameLabel")}
                 description={t("nameHint")}
                 autoComplete="name"

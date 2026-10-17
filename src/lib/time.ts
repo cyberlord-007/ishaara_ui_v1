@@ -17,3 +17,12 @@ export function getGreetingPeriod(hour: number): GreetingPeriod {
   }
   return "default";
 }
+
+/**
+ * @param totalSeconds a video's duration, in seconds
+ * @returns a spoken-friendly duration in whole minutes, e.g. "42 minutes" or "1 minute"
+ */
+export function formatSpokenDuration(totalSeconds: number): string {
+  const minutes = Math.max(1, Math.round(totalSeconds / 60));
+  return `${minutes} minute${minutes === 1 ? "" : "s"}`;
+}

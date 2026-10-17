@@ -26,7 +26,20 @@
     "greetingAfternoon": "Good afternoon",
     "greetingEvening": "Good evening",
     "greetingDefault": "Welcome back",
-    "comingSoon": "Pasting a link and choosing a language is coming in the next milestone."
+    "linkLabel": "YouTube link",
+    "linkHint": "Public videos up to 45 minutes. Links from youtu.be work too.",
+    "languageLegend": "Narration language",
+    "languageEnglish": "English",
+    "languageHindi": "हिन्दी (Hindi)",
+    "submit": "Describe this video",
+    "submitHint": "Most lectures are ready in 2 to 6 minutes.",
+    "recentHeading": "Recent lectures",
+    "seeAllInLibrary": "See all in Library",
+    "statusReady": "ready",
+    "statusInProgress": "still being prepared",
+    "statusFailed": "couldn't be described",
+    "languageNameEn": "English",
+    "languageNameHi": "Hindi"
   },
   "library": {
     "title": "Your lectures",
@@ -54,6 +67,29 @@
     "providerGoogle": "Google",
     "providerEmailLink": "Email link",
     "comingSoon": "Your activity is coming in a later milestone."
+  },
+  "processing": {
+    "preparingFor": "Preparing descriptions for",
+    "narrationIn": "narration in {language}",
+    "usuallyTakes": "This usually takes 2 to 6 minutes. You can leave this page; the lecture will wait for you in your Library.",
+    "stagesHeading": "Steps",
+    "stageResolving": "Checking the video",
+    "stageAnalyzing": "Finding the moments the teacher points at the board",
+    "stageWriting": "Writing narration",
+    "stageVoicing": "Recording the voice",
+    "stageSaving": "Saving",
+    "stageDone": "Done",
+    "stageInProgress": "In progress",
+    "stageWaiting": "Waiting",
+    "progressAnnouncement": "{stage}. {percent} percent.",
+    "readyAnnouncement": "Ready. Opening the player.",
+    "openWhenReady": "Open the player when ready",
+    "goToLibrary": "Go to Library",
+    "tryAgain": "Try again"
+  },
+  "watch": {
+    "title": "Watch",
+    "comingSoon": "The full player is coming in a later milestone."
   },
   "authGate": {
     "checking": "Checking your sign-in status…"

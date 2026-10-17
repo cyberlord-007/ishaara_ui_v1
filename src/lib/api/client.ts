@@ -2,9 +2,8 @@ import type { z } from "zod";
 import { env } from "@/env";
 import {
   ApiError,
-  ErrorCode,
-  type KnownErrorCode,
   ProblemDetailsSchema,
+  toKnownErrorCode,
 } from "@/lib/api/errors";
 import { auth } from "@/lib/firebase";
 
@@ -21,13 +20,6 @@ async function parseProblemDetails(
   } catch {
     return {};
   }
-}
-
-function toKnownErrorCode(code: string | undefined): KnownErrorCode {
-  const options: readonly string[] = ErrorCode.options;
-  return code && options.includes(code)
-    ? (code as KnownErrorCode)
-    : "unknown_error";
 }
 
 /**

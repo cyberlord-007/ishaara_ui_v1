@@ -144,6 +144,7 @@ function SignInPageInner() {
       ) : (
         <form
           onSubmit={handleSubmit(handleEmailLink)}
+          noValidate
           className="flex flex-col gap-4 border-t border-ink/20 pt-8"
         >
           <Controller
@@ -151,8 +152,10 @@ function SignInPageInner() {
             name="email"
             render={({ field }) => (
               <TextField
+                ref={field.ref}
                 label={t("emailLabel")}
-                type="email"
+                type="text"
+                inputMode="email"
                 autoComplete="email"
                 value={field.value}
                 onChange={field.onChange}
