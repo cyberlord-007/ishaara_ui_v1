@@ -1,0 +1,26 @@
+{
+  "cues": [
+    {
+      "cue_id": "cue_001",
+      "start_seconds": 42.5,
+      "spoken_phrase": "as shown here",
+      "referent_kind": "diagram",
+      "board_description": "A labelled diagram of a piston inside a sealed cylinder.",
+      "narration_text": "On the board is a diagram of a piston inside a sealed cylinder, labelled with pressure and volume.",
+      "audio_url": "https://storage.googleapis.com/ishaara/dQw4w9WgXcQ_en_v1/cue_001.wav",
+      "audio_duration_seconds": 6.2,
+      "confidence": 0.94
+    },
+    {
+      "cue_id": "cue_002",
+      "start_seconds": 128,
+      "spoken_phrase": "this equation",
+      "referent_kind": "equation",
+      "board_description": "PV = nRT, written in the centre of the board.",
+      "narration_text": "The equation on the board is P V equals n R T, the ideal gas law.",
+      "audio_url": null,
+      "audio_duration_seconds": null,
+      "confidence": 0.81
+    }
+  ]
+}

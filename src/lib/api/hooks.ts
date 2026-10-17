@@ -1,0 +1,74 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import * as endpoints from "@/lib/api/endpoints";
+import type {
+  AskQuestionRequest,
+  SubmitVideoRequest,
+  VideoKey,
+  VideoStatus,
+} from "@/lib/api/schemas";
+
+const CUES_AND_NOTES_GC_TIME_MS = 30 * 60 * 1000;
+
+function isTerminalStatus(status: VideoStatus | undefined): boolean {
+  return status === "ready" || status === "failed";
+}
+
+/** `POST /v1/videos`. Invalidates the history list on success. */
+export function useSubmitVideo() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (request: SubmitVideoRequest) => endpoints.submitVideo(request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me", "videos"] });
+    },
+  });
+}
+
+/** `GET /v1/videos/{video_key}`. Polls every 3 seconds until `status` is `ready` or `failed`. */
+export function useVideoStatus(videoKey: VideoKey) {
+  return useQuery({
+    queryKey: ["video", videoKey],
+    queryFn: () => endpoints.getVideoStatus(videoKey),
+    refetchInterval: (query) =>
+      isTerminalStatus(query.state.data?.status) ? false : 3000,
+    refetchIntervalInBackground: true,
+  });
+}
+
+/** `GET /v1/videos/{video_key}/cues`. Enable only once `status` is `ready`; results are immutable. */
+export function useCues(videoKey: VideoKey, enabled: boolean) {
+  return useQuery({
+    queryKey: ["video", videoKey, "cues"],
+    queryFn: () => endpoints.getCues(videoKey),
+    enabled,
+    staleTime: Number.POSITIVE_INFINITY,
+    gcTime: CUES_AND_NOTES_GC_TIME_MS,
+  });
+}
+
+/** `GET /v1/videos/{video_key}/notes?format=html`. Results are immutable per `video_key`. */
+export function useNotes(videoKey: VideoKey, enabled: boolean) {
+  return useQuery({
+    queryKey: ["video", videoKey, "notes"],
+    queryFn: () => endpoints.getNotesHtml(videoKey),
+    enabled,
+    staleTime: Number.POSITIVE_INFINITY,
+    gcTime: CUES_AND_NOTES_GC_TIME_MS,
+  });
+}
+
+/** `POST /v1/videos/{video_key}/questions`. */
+export function useAskQuestion(videoKey: VideoKey) {
+  return useMutation({
+    mutationFn: (request: AskQuestionRequest) =>
+      endpoints.askQuestion(videoKey, request),
+  });
+}
+
+/** `GET /v1/me/videos`. */
+export function useHistory() {
+  return useQuery({
+    queryKey: ["me", "videos"],
+    queryFn: () => endpoints.getHistory(),
+  });
+}
