@@ -13,6 +13,14 @@ type VideoState = "playing" | "paused" | "ended" | "buffering";
  * per the F4 plan's decision 5, YouTube's numeric error code bypasses the
  * port entirely and is wired straight to `actorRef.send({ type:
  * "PLAYER_ERROR", code })` from this component layer.
+ *
+ * Guards against React's dev-mode double-effect: `destroy()` can be called
+ * before `loadIframeApi()`'s shared promise has even resolved (the
+ * mount→cleanup→mount cycle Strict Mode runs on every effect). Without the
+ * `destroyed` check below, that phantom instance's deferred `new
+ * YT.Player(container, ...)` call still runs once the script loads — into
+ * the *same* container the real instance is also about to claim — which
+ * leaves the real instance's `onReady` never firing.
  */
 export function createYouTubePlayerPort(
   container: HTMLElement,
@@ -21,6 +29,7 @@ export function createYouTubePlayerPort(
 ): { port: VideoPlayerPort; ready: Promise<void>; destroy: () => void } {
   const stateListeners = new Set<(state: VideoState) => void>();
   let player: YT.Player | null = null;
+  let destroyed = false;
 
   const toPortState = (ytState: YT.PlayerState): VideoState | null => {
     switch (ytState) {
@@ -41,6 +50,10 @@ export function createYouTubePlayerPort(
   const ready = loadIframeApi().then(
     (YT) =>
       new Promise<void>((resolve) => {
+        if (destroyed) {
+          resolve();
+          return;
+        }
         player = new YT.Player(container, {
           videoId,
           playerVars: {
@@ -87,6 +100,7 @@ export function createYouTubePlayerPort(
     port,
     ready: ready as Promise<void>,
     destroy: () => {
+      destroyed = true;
       stateListeners.clear();
       player?.destroy();
       player = null;

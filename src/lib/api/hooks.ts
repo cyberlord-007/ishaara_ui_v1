@@ -24,13 +24,21 @@ export function useSubmitVideo() {
   });
 }
 
-/** `GET /v1/videos/{video_key}`. Polls every 3 seconds until `status` is `ready` or `failed`. */
+/**
+ * `GET /v1/videos/{video_key}`. Polls every 3 seconds until `status` is
+ * `ready` or `failed` — also stops on a persistent fetch/parse error, so a
+ * broken response doesn't retry forever every 3 seconds (`query.state.data`
+ * stays `undefined` on an error, which `isTerminalStatus` alone can't see).
+ */
 export function useVideoStatus(videoKey: VideoKey) {
   return useQuery({
     queryKey: ["video", videoKey],
     queryFn: () => endpoints.getVideoStatus(videoKey),
     refetchInterval: (query) =>
-      isTerminalStatus(query.state.data?.status) ? false : 3000,
+      isTerminalStatus(query.state.data?.status) ||
+      query.state.fetchFailureCount > 0
+        ? false
+        : 3000,
     refetchIntervalInBackground: true,
   });
 }
